@@ -1,0 +1,16 @@
+@mixin themify($themes) {
+    @each $name, $values in $themes {
+      .#{$name}-theme {
+        $theme-map: $values !global;
+        @content;
+      }
+    }
+}
+  
+@function themed($key) {
+    $value: map-get($theme-map, $key);
+    @if $value == null {
+        @error "Key `#{$key}` not found in the theme map.";
+    }
+    @return $value;
+}
